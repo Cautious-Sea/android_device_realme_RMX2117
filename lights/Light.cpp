@@ -21,8 +21,8 @@
 
 #include "Light.h"
 #include <android-base/logging.h>
-#include <android-base/stringprintf.h>
-#include <fstream>
+#include <fcntl.h>
+#include <unistd.h>
 
 namespace android {
 namespace hardware {
@@ -35,17 +35,28 @@ namespace implementation {
  */
 template <typename T>
 static void set(const std::string& path, const T& value) {
-    std::ofstream file(path);
-    file << value;
+    int fd = open(path.c_str(), O_WRONLY);
+    if (fd >= 0) {
+        char buffer[20];
+        int bytes = snprintf(buffer, sizeof(buffer), "%d\n", value);
+        write(fd, buffer, bytes);
+        close(fd);
+    }
 }
 
 template <typename T>
 static T get(const std::string& path, const T& def) {
-    std::ifstream file(path);
-    T result;
-
-    file >> result;
-    return file.fail() ? def : result;
+    int fd = open(path.c_str(), O_RDONLY);
+    if (fd >= 0) {
+        char buffer[20];
+        int bytes = read(fd, buffer, sizeof(buffer) - 1);
+        close(fd);
+        if (bytes > 0) {
+            buffer[bytes] = '\0';
+            return static_cast<T>(atoi(buffer));
+        }
+    }
+    return def;
 }
 
 static int rgbToBrightness(const LightState& state) {

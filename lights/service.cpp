@@ -30,6 +30,13 @@ using android::hardware::light::V2_0::implementation::Light;
 using android::OK;
 using android::status_t;
 
+// Android 16 Clang libc++ emits references to __libcpp_verbose_abort.
+// Provide a local weak definition to satisfy the symbol when running
+// against VNDK v31 libc++.so on user builds.
+extern "C" __attribute__((weak)) void _ZNSt3__122__libcpp_verbose_abortEPKcz(const char* /*format*/, ...) {
+    abort();
+}
+
 int main() {
     android::sp<ILight> service = new Light();
 
