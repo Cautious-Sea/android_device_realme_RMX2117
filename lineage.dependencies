@@ -1,0 +1,38 @@
+[
+  {
+    "repository": "android_kernel_oplus_mt6853",
+    "target_path": "kernel/oplus/mt6853",
+    "remote": "github",
+    "revision": "lineage-23.2"
+  },
+  {
+    "repository": "proprietary_vendor_realme_RMX2117",
+    "target_path": "vendor/realme/RMX2117",
+    "remote": "github",
+    "revision": "lineage-23.2"
+  },
+  {
+    "repository": "android_hardware_oplus",
+    "target_path": "hardware/oplus",
+    "remote": "github",
+    "revision": "lineage-23.2"
+  },
+  {
+    "repository": "android_hardware_mediatek",
+    "target_path": "hardware/mediatek",
+    "remote": "github",
+    "revision": "lineage-23.2"
+  },
+  {
+    "repository": "android_device_mediatek_sepolicy_vndr",
+    "target_path": "device/mediatek/sepolicy_vndr",
+    "remote": "github",
+    "revision": "lineage-23.2"
+  },
+  {
+    "repository": "android_vendor_mediatek_ims",
+    "target_path": "vendor/mediatek/ims",
+    "remote": "github",
+    "revision": "android-16-qpr2"
+  }
+]
