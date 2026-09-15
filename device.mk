@@ -34,6 +34,9 @@ PRODUCT_AAPT_PREF_CONFIG := xxhdpi
 
 # Soong namespaces
 PRODUCT_SOONG_NAMESPACES += \
+    hardware/mediatek \
+    hardware/mediatek/libmtkperf_client \
+    hardware/oplus \
     $(DEVICE_PATH)
 
 # Dynamic Partition
@@ -59,19 +62,37 @@ PRODUCT_PACKAGES += \
 DEVICE_PACKAGE_OVERLAYS += \
     $(DEVICE_PATH)/overlay
 
+PRODUCT_ENFORCE_RRO_EXCLUDED_OVERLAYS += \
+    $(DEVICE_PATH)/overlay
+
 # Lights
 PRODUCT_PACKAGES += \
     android.hardware.light@2.0-service.RMX2117
 
+# Shims
+PRODUCT_PACKAGES += \
+    libshim_lights
+
+PRODUCT_COPY_FILES += \
+    $(DEVICE_PATH)/rootdir/etc/init.shims.rc:$(TARGET_COPY_OUT_SYSTEM)/etc/init/init.shims.rc
+
 # Biometrics
 PRODUCT_PACKAGES += \
-    android.hardware.biometrics.fingerprint@2.3-service.RMX2117
+    android.hardware.biometrics.fingerprint@2.3-service.oplus
 
 PRODUCT_COPY_FILES += \
     frameworks/native/data/etc/android.hardware.fingerprint.xml:$(TARGET_COPY_OUT_SYSTEM)/etc/permissions/android.hardware.fingerprint.xml
 # Ramdisk
 PRODUCT_COPY_FILES += \
     $(DEVICE_PATH)/rootdir/etc/fstab.mt6853:$(TARGET_COPY_OUT_RAMDISK)/fstab.mt6853
+
+# Kernel Manager
+PRODUCT_COPY_FILES += \
+    $(DEVICE_PATH)/configs/ax_kernel_manager.xml:$(TARGET_COPY_OUT_SYSTEM_EXT)/etc/ax_kernel_manager.xml
+
+# Axion Init & Cgroups
+PRODUCT_COPY_FILES += \
+    device/axion/common/init/init.axion.rc:$(TARGET_COPY_OUT_SYSTEM)/etc/init/init.axion.rc
 
 # System prop
 -include $(DEVICE_PATH)/system_prop.mk
@@ -117,9 +138,42 @@ PRODUCT_PACKAGES += \
     libsuspend
 
 
+# Bluetooth
+PRODUCT_PACKAGES += \
+    android.hardware.bluetooth-service.mediatek
+
+# Display
+PRODUCT_PACKAGES += \
+    android.hardware.memtrack-service.mediatek
+
+# Power
+PRODUCT_PACKAGES += \
+    vendor.mediatek.hardware.mtkpower@1.2-service.stub \
+    libmtkperf_client \
+    libmtkperf_client_vendor
+
+# Rootdir
+PRODUCT_PACKAGES += \
+    chipinfo
+
+# Sensors
+PRODUCT_PACKAGES += \
+    sensors.oplus
+
+# Thermal
+PRODUCT_PACKAGES += \
+    android.hardware.thermal-service.mediatek
+
+# WiFi
+PRODUCT_PACKAGES += \
+    libwifi-hal-wrapper
+
+# MediaTek Frameworks
+$(call inherit-product, hardware/mediatek/frameworks/mediatek-frameworks.mk)
+
 # IMS
+$(call inherit-product, vendor/mediatek/ims/ims.mk)
 PRODUCT_BOOT_JARS += \
-    mediatek-common \
     mediatek-framework \
     mediatek-ims-base \
     mediatek-ims-common \
