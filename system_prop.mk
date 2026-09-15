@@ -11,9 +11,11 @@ PRODUCT_SYSTEM_DEFAULT_PROPERTIES += \
     ro.mtk_perf_fast_start_win=1 \
     ro.mtk_perf_response_time=1
 
-# Privapp permissions whitelisting
-PRODUCT_PRODUCT_PROPERTIES += \
-    ro.control_privapp_permissions=log
+# UI & Animation Performance ("MTK Smooth" Activity Animations)
+PRODUCT_SYSTEM_DEFAULT_PROPERTIES += \
+    persist.sys.activity_anim_perf_override=true \
+    debug.hwui.renderer=skiagl \
+    debug.renderengine.backend=skiaglthreaded
 
 # Audio
 PRODUCT_PRODUCT_PROPERTIES += \
@@ -46,7 +48,3 @@ PRODUCT_SYSTEM_PROPERTIES += \
     persist.bluetooth.a2dp_offload.disabled=true \
     ro.bluetooth.a2dp_offload.supported=false
 
-# VoNR (Voice Over New radio)
-PRODUCT_SYSTEM_DEFAULT_PROPERTIES += \
-    persist.radio.is_vonr_enabled_0=true \
-    persist.radio.is_vonr_enabled_1=true
