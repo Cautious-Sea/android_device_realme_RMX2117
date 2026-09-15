@@ -1,0 +1,13 @@
+service vendor.light-default /vendor/bin/hw/android.hardware.lights-service.mediatek
+    override
+    class hal
+    user system
+    group system
+    shutdown critical
+    interface android.hardware.light@2.0::ILight default
+
+# Disable obsolete crashing vtservice
+service vtservice /system/bin/vtservice
+    override
+    disabled
+
