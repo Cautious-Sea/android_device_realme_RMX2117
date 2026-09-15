@@ -1,5 +1,5 @@
 #
-# Copyright (C) 2020-2022 The CipherOS Project
+# Copyright (C) 2024-2026 AxionOS
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -15,9 +15,9 @@
 #
 
 PRODUCT_MAKEFILES := \
-    $(LOCAL_DIR)/cipher_RMX2117.mk
+    $(LOCAL_DIR)/lineage_RMX2117.mk
 
 COMMON_LUNCH_CHOICES := \
-    cipher_RMX2117-user \
-    cipher_RMX2117-userdebug \
-    cipher_RMX2117-eng
+    lineage_RMX2117-bp4a-user \
+    lineage_RMX2117-bp4a-userdebug \
+    lineage_RMX2117-bp4a-eng
