@@ -1,11 +1,10 @@
 on init
     mount none /vendor/lost+found /vendor/overlay bind
     setprop sys.usb.ffs.aio_compat 1
-    setprop persist.dbg.allow_ims_off 1
     setprop persist.dbg.volte_avail_ovr 1
     setprop persist.dbg.vt_avail_ovr 1
     setprop persist.dbg.wfc_avail_ovr 1
-    setprop persist.vendor.vilte_support 1
+    setprop persist.vendor.vilte_support 0
     write /proc/fastchg_fw_update 1
     # Custom overrides that need to happen right on boot
     # Override vendor fstab
@@ -19,7 +18,28 @@ on post-fs
     #  so it is fine to just revert back)
     umount /vendor/etc/fstab.mt6853
 
+on boot
+    # Tethering hardware offload acceleration node permissions
+    chown system system /dev/mddp
+    chmod 0660 /dev/mddp
+
+    # CPU cluster nodes permissions for Axion Kernel Manager
+    chown system system /sys/devices/system/cpu/cpufreq/policy0/scaling_governor
+    chmod 0660 /sys/devices/system/cpu/cpufreq/policy0/scaling_governor
+    chown system system /sys/devices/system/cpu/cpufreq/policy0/scaling_min_freq
+    chmod 0660 /sys/devices/system/cpu/cpufreq/policy0/scaling_min_freq
+    chown system system /sys/devices/system/cpu/cpufreq/policy0/scaling_max_freq
+    chmod 0660 /sys/devices/system/cpu/cpufreq/policy0/scaling_max_freq
+
+    chown system system /sys/devices/system/cpu/cpufreq/policy6/scaling_governor
+    chmod 0660 /sys/devices/system/cpu/cpufreq/policy6/scaling_governor
+    chown system system /sys/devices/system/cpu/cpufreq/policy6/scaling_min_freq
+    chmod 0660 /sys/devices/system/cpu/cpufreq/policy6/scaling_min_freq
+    chown system system /sys/devices/system/cpu/cpufreq/policy6/scaling_max_freq
+    chmod 0660 /sys/devices/system/cpu/cpufreq/policy6/scaling_max_freq
+
 # Disable AOSP RIL if MTK RIL is up
 on property:vendor.ril.mtk=1
     stop vendor.ril-daemon
+
 
