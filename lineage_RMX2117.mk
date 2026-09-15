@@ -1,5 +1,6 @@
 #
 # Copyright (C) 2020-2022 The CipherOS Project
+# Copyright (C) 2024-2026 AxionOS
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -22,14 +23,33 @@ $(call inherit-product, $(SRC_TARGET_DIR)/product/non_ab_device.mk)
 # Inherit from RMX2117 device
 $(call inherit-product, device/realme/RMX2117/device.mk)
 
-# Inherit some common cipherOS stuff.
-$(call inherit-product, vendor/cipher/config/common_full_phone.mk)
+# AxionOS Configuration Flags
+TARGET_DISABLE_EPPE := true
+TARGET_INCLUDE_AXFX := true
+TARGET_INCLUDES_LOS_PREBUILTS := false
+TARGET_INCLUDE_GOOGLE_TELECOMM := true
+
+# AxionOS Device Properties
+AXION_MAINTAINER := Cautious-Sea
+AXION_PROCESSOR := MediaTek_Dimensity_800U
+AXION_CAMERA_REAR_INFO := 48,8,2
+AXION_CAMERA_FRONT_INFO := 16
+AXION_BATTERY_CAPACITY := 5000
+
+# Inherit some common Lineage stuff.
+$(call inherit-product, vendor/lineage/config/common_full_phone.mk)
+
+# Whether the device supports Fingerprint On Display
+TARGET_HAS_UDFPS := false
+
+# Disable A/B OTA Updater
+AB_OTA_UPDATER := false
 
 # Boot Animation
 TARGET_BOOT_ANIMATION_RES := 1080
-CIPHER_MAINTAINER := TechyMinati
+
 # Device identifier. This must come after all inclusions.
-PRODUCT_NAME := cipher_RMX2117
+PRODUCT_NAME := lineage_RMX2117
 PRODUCT_DEVICE := RMX2117
 PRODUCT_BRAND := realme
 PRODUCT_MODEL := realme Narzo 30 Pro 5G
@@ -38,7 +58,7 @@ PRODUCT_MANUFACTURER := realme
 PRODUCT_GMS_CLIENTID_BASE := android-realme
 
 PRODUCT_BUILD_PROP_OVERRIDES += \
-    PRIVATE_BUILD_DESC="sys_mssi_64_cn_armv82-user 12 SP1A.210812.016 1660047623876 release-keys"
+    BuildDesc="sys_mssi_64_cn_armv82-user 12 SP1A.210812.016 1660047623876 release-keys"
 
 # Set BUILD_FINGERPRINT variable to be picked up by both system and vendor build.prop
 BUILD_FINGERPRINT := "realme/RMX2117/RMX2117L1:12/SP1A.210812.016/Q.202208092022:user/release-keys"
