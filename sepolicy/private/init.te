@@ -6,3 +6,13 @@ allow init sysfs_battery_supply:file { setattr };
 
 # Allow init to create socket_device(s)
 allow init socket_device:sock_file create_file_perms;
+
+# Allow init to inspect tmpfs block device nodes during early mount
+allow init tmpfs:blk_file { getattr ioctl open read };
+allowxperm init tmpfs:blk_file ioctl { BLKGETSIZE64 BLKSSZGET };
+
+# Allow init to relabel dev_type symlinks (e.g. oplusreserve block device symlinks)
+allow init dev_type:lnk_file relabelto;
+
+# Silence harmless PTRACE_TRACEME denials from proprietary vendor blobs during anti-debug check
+dontaudit init domain:process ptrace;

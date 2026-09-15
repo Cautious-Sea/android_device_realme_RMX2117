@@ -1,0 +1,2 @@
+# Suppress spurious audit denials on inherited character device descriptors (e.g. ccci modem nodes)
+dontaudit netutils_wrapper dev_type:chr_file { read write };

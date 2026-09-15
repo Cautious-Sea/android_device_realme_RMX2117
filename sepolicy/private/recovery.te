@@ -2,4 +2,18 @@
 recovery_only(`
     permissive init;
     permissive recovery;
+
+    # Allow recovery to register and discover keymaster, gatekeeper, and keystore services for FBE decryption
+    allow recovery hal_keymaster_hwservice:hwservice_manager { add find };
+    allow recovery hal_gatekeeper_hwservice:hwservice_manager { add find };
+    allow recovery hal_health_hwservice:hwservice_manager { add find };
+    allow recovery hidl_base_hwservice:hwservice_manager { add find };
+    allow recovery hidl_manager_hwservice:hwservice_manager { add find };
+    allow recovery hidl_token_hwservice:hwservice_manager { add find };
+    allow recovery default_android_hwservice:hwservice_manager { add find };
+
+    allow recovery service_manager_service:service_manager { add find };
+    allow recovery service_manager_vndservice:service_manager { add find };
+    allow recovery keystore_service:service_manager { add find };
+    allow recovery { apc_service authorization_service keystore_compat_hal_service legacykeystore_service keystore_maintenance_service keystore_metrics_service }:service_manager { add find };
 ')
